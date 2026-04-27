@@ -5,6 +5,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.progress_bar import ProgressBar
+from rich import box
 
 console = Console()
 DB_FILE = "tasks.txt"
@@ -75,11 +76,11 @@ def list_tasks():
         console.print("[yellow]Your task list is empty![/yellow]")
         return
 
-    table = Table(title="🚀 Task Dashboard", header_style="bold magenta", expand=True)
+    table = Table(title="Task Dashboard", header_style="bold magenta", box=box.SIMPLE_HEAD, expand= False)
     table.add_column("ID", justify="center", style="dim")
-    table.add_column("Task", style="white", width=20)
+    table.add_column("Task", style="white")
     table.add_column("Time Spent", justify="right", style="green")
-    table.add_column("Progress", justify="center", width=30)
+    table.add_column("Progress", justify="center")
     table.add_column("Status", justify="center")
 
     for task in tasks:
@@ -87,7 +88,7 @@ def list_tasks():
         total_time = float(parts[3])
         goal_time = float(parts[5]) if len(parts) > 5 else 3600  # Default 1hr if missing
 
-        if parts[4] != "0":  # If running
+        if parts[4] != "0":
             total_time += time.time() - float(parts[4])
             status = "[bold blue]RUNNING[/bold blue]"
         else:
@@ -100,7 +101,7 @@ def list_tasks():
             parts[0],
             parts[1],
             format_time(total_time),
-            ProgressBar(total=1.0, completed=percentage, width=25),
+            ProgressBar(total=1.0, completed=percentage, width=15),
             status
         )
 
