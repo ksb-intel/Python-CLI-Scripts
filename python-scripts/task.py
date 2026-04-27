@@ -2,7 +2,7 @@ import sys
 import os
 import time
 
-DB_FILE = "tasks.txt"
+DB_FILE = "../tasks.txt"
 
 
 def init_db():
