@@ -6,6 +6,7 @@ from rich.table import Table
 from rich.panel import Panel
 from rich.progress_bar import ProgressBar
 from rich import box
+from datetime import datetime
 
 console = Console()
 DB_FILE = "tasks.txt"
@@ -73,11 +74,12 @@ def delete_task(task_id):
 def list_tasks():
     tasks = load_tasks()
     if not tasks:
+        console.print()
         console.print("[yellow]Your task list is empty![/yellow]")
         return
 
-    table = Table(title="Task Dashboard", header_style="bold magenta", box=box.SIMPLE_HEAD, expand= False)
-    table.add_column("ID", justify="center", style="dim")
+    table = Table(title="Task Dashboard", header_style="bold blue", box=box.SIMPLE, expand= False)
+    table.add_column("ID", justify="center", style="white")
     table.add_column("Task", style="white")
     table.add_column("Time Spent", justify="right", style="green")
     table.add_column("Progress", justify="center")
@@ -105,7 +107,14 @@ def list_tasks():
             status
         )
 
+    console.print()
+    console.print()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    console.print(f"\n[red]Generated on {current_time}[/red]")
+    console.print()
+    console.print()
     console.print(table)
+    console.print()
 
 
 def start_task(task_id):
